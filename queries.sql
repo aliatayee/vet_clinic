@@ -53,3 +53,45 @@ SELECT  * FROM animals
    INNER JOIN owners
    ON owners.id = animals.owner_id
    WHERE full_name LIKE '%Melody Pond%';
+   
+--List of all animals that are pokemon (their type is Pokemon).
+SELECT  * FROM animals
+   INNER JOIN species
+   ON species.id = animals.species_id
+   WHERE species.name LIKE '%Pokemon%';
+
+--List all owners and their animals, remember to include those that don't own any animal.
+SELECT  * FROM animals
+    LEFT JOIN owners
+   ON owners.id = animals.owner_id
+
+--How many animals are there per species?
+SELECT  COUNT(*) FROM animals
+    INNER JOIN species
+   ON species.id = animals.species_id WHERE species.name LIKE '%Pokemon%';
+SELECT  COUNT(*) FROM animals
+    INNER JOIN species
+   ON species.id = animals.species_id WHERE species.name LIKE '%Digimon%';
+
+--List all Digimon owned by Jennifer Orwell.
+   SELECT  * FROM animals
+    INNER JOIN owners
+   ON owners.id = animals.owner_id
+    INNER JOIN species
+    ON species.id = animals.species_id
+    WHERE owners.full_name LIKE '%Jennifer Orwell%'
+    AND species.name LIKE '%Digimon%';
+
+--List all animals owned by Dean Winchester that haven't tried to escape.
+SELECT  * FROM animals
+    INNER JOIN owners
+   ON owners.id = animals.owner_id
+    WHERE owners.full_name LIKE '%Dean Winchester%'
+    AND escape_attempts <= 0;
+
+--Who owns the most animals?
+SELECT owners.full_name, COUNT(animals.name) FROM animals 
+INNER JOIN owners ON owners.id = animals.owner_id
+GROUP BY owners.id
+ORDER BY COUNT(animals.name) DESC
+LIMIT 1;
