@@ -33,3 +33,25 @@ ADD FOREIGN KEY (species_id) REFERENCES species(id);
 ALTER TABLE animals
 ADD COLUMN owner_id int,
 ADD FOREIGN KEY (owner_id) REFERENCES owners(id);
+
+CREATE TABLE vets (
+    id integer NOT NULL AUTO_INCREMENT ,
+	name varchar(100),
+	age INT,
+	date_of_graduation DATE,
+    PRIMARY KEY (id)
+);
+
+CREATE TABLE specializations (
+	vets_id INT,
+	species_id INT,
+	FOREIGN KEY (vets_id) REFERENCES vets(id),
+	FOREIGN KEY (species_id) REFERENCES species(id)
+)
+CREATE TABLE visits (
+	vets_id INT,
+	animal_id INT,
+	visit_date timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+	FOREIGN KEY (vets_id) REFERENCES vets(id),
+	FOREIGN KEY (animal_id) REFERENCES animals(id)
+)
